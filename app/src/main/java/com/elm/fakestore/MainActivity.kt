@@ -4,16 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -23,8 +23,11 @@ import com.elm.fakestore.ui.screens.Categories.CateogriesScreen
 import com.elm.fakestore.ui.screens.Categories.CategoryProductsScreen
 import com.elm.fakestore.ui.screens.Home.HomeScreen
 import com.elm.fakestore.ui.screens.deitals.DetailsUi
-import com.elm.fakestore.ui.screens.navigationBar.BottomNavigationBar
-import com.elm.fakestore.ui.screens.navigationBar.Screens
+import com.elm.fakestore.ui.navigationBar.BottomNavigationBar
+import com.elm.fakestore.ui.navigationBar.Screens
+
+
+import com.elm.fakestore.ui.viewModel.CartViewModel
 import com.elm.fakestore.ui.viewModel.CategoryViewModel
 import com.elm.fakestore.ui.viewModel.HomeViewModel
 
@@ -51,6 +54,9 @@ fun MainScreen() {
     val navController = rememberNavController()
     val productViewModel: HomeViewModel = viewModel()
     val categoryViewModel: CategoryViewModel = viewModel()
+    
+    val cartViewModel: CartViewModel = viewModel()
+    
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -60,15 +66,15 @@ fun MainScreen() {
         val graph =
             navController.createGraph(startDestination = Screens.Home.route) {
                 composable(route = Screens.Cart.route) {
-                    CartScreen()
+                    CartScreen(cartViewModel)
                 }
 
                 composable(route = Screens.Home.route) {
-                    HomeScreen(navController = navController, viewModel = productViewModel)
+                    HomeScreen(navController = navController, viewModel = productViewModel , cartViewModel = cartViewModel)
                 }
                 composable(route = Screens.Details.route) { backStackEntry ->
                     val productId = backStackEntry.arguments?.getString("productId")?.toIntOrNull()
-                    DetailsUi(productId)
+                    DetailsUi(productId, cartViewModel)
                 }
                 composable(route = Screens.Categories.route) {
                     CateogriesScreen(viewModel = categoryViewModel, navController = navController)

@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.elm.fakestore.data.models.Products
-import com.elm.fakestore.ui.screens.navigationBar.Screens
+import com.elm.fakestore.ui.navigationBar.Screens
 import com.elm.fakestore.ui.viewModel.CategoryViewModel
 
 @Composable

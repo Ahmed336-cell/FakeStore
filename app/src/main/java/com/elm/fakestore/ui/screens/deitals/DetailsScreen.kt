@@ -12,27 +12,41 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
 import coil.compose.rememberAsyncImagePainter
 import com.elm.fakestore.data.models.Products
 import com.elm.fakestore.data.network.RetrofitClient
+import com.elm.fakestore.ui.viewModel.CartViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
 @Composable
-fun DetailsUi(productId: Int?){
+fun DetailsUi(productId: Int?, cartViewModel: CartViewModel? = null){
+    cartViewModel?.let { viewModel ->
+        val context = LocalContext.current
+        LaunchedEffect(Unit) {
+            viewModel.initializeRepository(context)
+        }
+    }
+    
     var product by remember { mutableStateOf<Products?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
@@ -59,19 +73,24 @@ fun DetailsUi(productId: Int?){
             CircularProgressIndicator()
         }
         error != null -> Text(text = "Error: $error", modifier = Modifier.padding(16.dp))
-        product != null -> Ui(product!!)
+        product != null -> Ui(product!! , cartViewModel)
         else -> Text(text = "Product not found", modifier = Modifier.padding(16.dp))
     }
 }
 
 @Composable
-fun Ui(product: Products) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .padding(top = 8.dp, bottom = 8.dp)
-    ) {
+fun Ui(product: Products, cartViewModel: CartViewModel?) {
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .padding(top = 8.dp, bottom = 8.dp)
+        ) {
+
         Image(
             painter = rememberAsyncImagePainter(model = product.images.firstOrNull()),
             contentDescription = product.title,
@@ -111,13 +130,29 @@ fun Ui(product: Products) {
 
 
         Button(
-            onClick = { /* Handle add to cart action */ },
+            onClick = { 
+                cartViewModel?.addToCart(product)
+                scope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = "${product.title} added to cart!",
+                        duration = androidx.compose.material3.SnackbarDuration.Short
+                    )
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(8.dp),
+            enabled = cartViewModel != null
         ) {
             Text(text = "Add to Cart", modifier = Modifier.padding(8.dp))
         }
+        }
+        
+        // Snackbar positioned at the bottom
+        androidx.compose.material3.SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }
 

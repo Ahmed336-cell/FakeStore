@@ -1,4 +1,4 @@
-package com.elm.fakestore.ui.screens.navigationBar
+package com.elm.fakestore.ui.navigationBar
 
 sealed class Screens (val route : String){
     object Home : Screens("home")

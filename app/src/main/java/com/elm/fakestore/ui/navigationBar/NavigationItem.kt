@@ -1,4 +1,4 @@
-package com.elm.fakestore.ui.screens.navigationBar
+package com.elm.fakestore.ui.navigationBar
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

@@ -1,4 +1,4 @@
-package com.elm.fakestore.ui.screens.navigationBar
+package com.elm.fakestore.ui.navigationBar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
