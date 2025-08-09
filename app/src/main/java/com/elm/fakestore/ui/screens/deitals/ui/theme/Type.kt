@@ -1,4 +1,4 @@
-package com.elm.fakestore.screens.deitals.ui.theme
+package com.elm.fakestore.ui.screens.deitals.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

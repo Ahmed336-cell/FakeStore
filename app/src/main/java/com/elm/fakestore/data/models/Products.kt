@@ -1,4 +1,4 @@
-package com.elm.fakestore.data
+package com.elm.fakestore.data.models
 
 data class Products(
     val id: Int,

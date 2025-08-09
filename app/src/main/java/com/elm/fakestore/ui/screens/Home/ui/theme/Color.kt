@@ -1,4 +1,4 @@
-package com.elm.fakestore.screens.deitals.ui.theme
+package com.elm.fakestore.ui.screens.Home.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.elm.fakestore.screens.deitals.ui.theme
+package com.elm.fakestore.ui.screens.deitals.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

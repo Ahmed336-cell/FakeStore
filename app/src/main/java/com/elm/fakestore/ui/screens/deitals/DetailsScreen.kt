@@ -1,4 +1,4 @@
-package com.elm.fakestore.screens.deitals
+package com.elm.fakestore.ui.screens.deitals
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -18,13 +18,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.elm.fakestore.data.Products
-import com.elm.fakestore.network.RetrofitClient
+import com.elm.fakestore.data.models.Products
+import com.elm.fakestore.data.network.RetrofitClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 @Composable
@@ -32,11 +35,17 @@ fun DetailsUi(productId: Int?){
     var product by remember { mutableStateOf<Products?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
+    
     LaunchedEffect(productId) {
         try {
             isLoading = true
             error = null
-            product = RetrofitClient.apiSerice.getProductById(productId)
+            if (productId != null) {
+                val response = withContext(Dispatchers.IO) {
+                    RetrofitClient.apiSerice.getProductById(productId)
+                }
+                product = response
+            }
         } catch (e: Exception) {
             error = e.message
         } finally {
@@ -45,16 +54,13 @@ fun DetailsUi(productId: Int?){
     }
 
     when{
-        isLoading -> Box(contentAlignment = androidx.compose.ui.Alignment.Center, modifier = Modifier.fillMaxSize()) {
+        isLoading -> Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             CircularProgressIndicator()
         }
         error != null -> Text(text = "Error: $error", modifier = Modifier.padding(16.dp))
         product != null -> Ui(product!!)
         else -> Text(text = "Product not found", modifier = Modifier.padding(16.dp))
-
     }
-
-
 }
 
 @Composable

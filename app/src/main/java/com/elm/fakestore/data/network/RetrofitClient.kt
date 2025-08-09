@@ -1,4 +1,4 @@
-package com.elm.fakestore.network
+package com.elm.fakestore.data.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
