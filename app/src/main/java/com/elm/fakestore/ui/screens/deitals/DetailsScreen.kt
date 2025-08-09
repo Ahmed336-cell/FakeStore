@@ -141,14 +141,14 @@ fun Ui(product: Products, cartViewModel: CartViewModel?) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(8.dp)
+            .height(48.dp),
             enabled = cartViewModel != null
         ) {
-            Text(text = "Add to Cart", modifier = Modifier.padding(8.dp))
+            Text(text = "Add to Cart")
         }
         }
         
-        // Snackbar positioned at the bottom
         androidx.compose.material3.SnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier.align(Alignment.BottomCenter)
