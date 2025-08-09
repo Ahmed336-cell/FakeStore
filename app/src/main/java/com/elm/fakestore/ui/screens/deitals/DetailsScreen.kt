@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -80,8 +81,11 @@ fun Ui(product: Products) {
             contentScale = ContentScale.FillWidth
         )
         Spacer(modifier = Modifier.height(8.dp))
-
-
+        Text(
+            text = "Category: ${product.category.name}",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(8.dp)
+        )
 
             Text(
                 text = product.title,
@@ -104,6 +108,16 @@ fun Ui(product: Products) {
             )
         }
         Text(text = product.description, style = MaterialTheme.typography.bodyMedium,  modifier =    Modifier.padding(8.dp))
+
+
+        Button(
+            onClick = { /* Handle add to cart action */ },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Text(text = "Add to Cart", modifier = Modifier.padding(8.dp))
+        }
     }
 }
 

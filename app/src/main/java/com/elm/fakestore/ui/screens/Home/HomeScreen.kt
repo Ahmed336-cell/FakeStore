@@ -165,17 +165,16 @@ fun productCard( product: Products,onClick: () -> Unit ) {
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium
                     )
-                }
-                Button(onClick={},
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 16.dp)
-                        .height(40.dp)
+                    Button(
+                        onClick = { /* Handle add to cart action */ },
+                        modifier = Modifier
+
+                            .padding(top = 8.dp)
                     ) {
-
-
-                    Text(text = "Add to Cart")
+                        Text(text = "Add to Cart")
+                    }
                 }
+
 
         }
     }
