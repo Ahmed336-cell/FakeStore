@@ -1,5 +1,6 @@
 package com.elm.fakestore.ui.navigationBar
 
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
@@ -28,7 +30,7 @@ fun BottomNavigationBar(
         NavigationItem(
             title = "Home",
             icon = Icons.Default.Home,
-            route = Screens.Home.route
+            route = Screens.Home.route,
         ),
 
         NavigationItem(
@@ -44,7 +46,10 @@ fun BottomNavigationBar(
     )
 
     NavigationBar(
-        containerColor = Color.White
+        containerColor = Color.White,
+        contentColor = Color.Black,
+        tonalElevation = 4.dp,
+        modifier = androidx.compose.ui.Modifier.navigationBarsPadding(),
     ) {
         navigationItems.forEachIndexed { index, item ->
             NavigationBarItem(

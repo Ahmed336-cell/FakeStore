@@ -170,6 +170,7 @@ fun CartItemCard(
     onRemoveItem: (Int) -> Unit
 ) {
     Card(
+
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(12.dp)

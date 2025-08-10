@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,6 +24,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +34,7 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.elm.fakestore.data.models.Category
 import com.elm.fakestore.ui.navigationBar.Screens
+import com.elm.fakestore.ui.screens.Home.ui.theme.Secondary
 import com.elm.fakestore.ui.viewModel.CategoryViewModel
 
 @Composable
@@ -61,14 +66,21 @@ fun CateogriesScreen(
             ) {
                 CircularProgressIndicator()
             }
+
             errorMessage != null -> Text(
                 text = "Error: $errorMessage",
                 modifier = Modifier.padding(16.dp)
             )
+
             else -> CategoriesGrid(
                 categories = categories,
                 onCategoryClick = { category ->
-                    navController.navigate(Screens.CategoryProducts.createRoute(category.id, category.name))
+                    navController.navigate(
+                        Screens.CategoryProducts.createRoute(
+                            category.id,
+                            category.name
+                        )
+                    )
                 }
             )
         }
@@ -103,6 +115,8 @@ fun CategoriesGrid(
 @Composable
 fun CategoryCard(category: Category, onClick: () -> Unit) {
     Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(16.dp),
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
@@ -116,6 +130,7 @@ fun CategoryCard(category: Category, onClick: () -> Unit) {
                 contentDescription = category.name,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clip(RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp))
                     .height(140.dp),
                 contentScale = ContentScale.Crop
             )
