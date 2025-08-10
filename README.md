@@ -85,6 +85,9 @@ The FakeStore E-Commerce App provides a seamless shopping experience with the fo
 4. Tap a product to see its **Details** screen.
 5. Add products to the cart and view them in the **Cart** screen.
 6. Enjoy real-time feedback via snackbars for cart actions and network errors.
+## Demo
+![Deno_REC](Demo/demo.gif)
+
 
 ## Screenshots
 
