@@ -94,7 +94,7 @@ The FakeStore E-Commerce App provides a seamless shopping experience with the fo
 
 | Cart Screen | Categories Screen | Category Products Screen |
 |-------------|------------------|--------------------------|
-| ![Cart Screen](cart/home.png) | ![Categories Screen](PICs/categories.png) | ![Category Products Screen](PICs/cat_products.png) |
+| ![Cart Screen](PICs/cart.png) | ![Categories Screen](PICs/categories.png) | ![Category Products Screen](PICs/cat_products.png) |
 
 
 ## License
